@@ -34,12 +34,12 @@ func GenerateToken(User model.User) (string, error) {
 	}
 	return signedToken, nil
 }
-func verifyUser(enteredPass, registeredPass string) error {
-	return bcrypt.CompareHashAndPassword([]byte(enteredPass), []byte(registeredPass))
+func verifyUser(enteredPass, hashedPass string) error {
+	return bcrypt.CompareHashAndPassword([]byte(enteredPass), []byte(hashedPass))
 }
 func AuthenticateUser(email, password string) (string, error) {
 	var user model.User
-	err := database.DB.QueryRow("SELECT id,password FROM users WHERE email=?", user.Password).Scan(&user.ID, &user.Password)
+	err := database.DB.QueryRow("SELECT id,password FROM users WHERE email=?", email).Scan(&user.ID, &user.Password)
 	if err != nil {
 		return "", err
 	}

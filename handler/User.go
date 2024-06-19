@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func RegisterUser(c *gin.Context) {
@@ -29,7 +30,8 @@ func RegisterUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Email"})
 		return
 	}
-	_, err := database.DB.Exec("INSERT INTO users(username,email,password) VALUES(?,?,?)", user.Name, user.Email, user.Password)
+	pass, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	_, err := database.DB.Exec("INSERT INTO users(username,email,password) VALUES(?,?,?)", user.Name, user.Email, string(pass))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
