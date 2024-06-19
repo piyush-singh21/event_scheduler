@@ -29,7 +29,7 @@ func RegisterUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Email"})
 		return
 	}
-	_, err := database.DB.Exec("INSERT INTO users(name,email,password) VALUES(?,?,?)", user.Name, user.Email, user.Password)
+	_, err := database.DB.Exec("INSERT INTO users(username,email,password) VALUES(?,?,?)", user.Name, user.Email, user.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

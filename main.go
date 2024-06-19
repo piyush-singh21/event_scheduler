@@ -11,5 +11,5 @@ func main() {
 	db.InitDB()
 	r := gin.Default()
 	r.POST("/register", handler.RegisterUser)
-	r.Run()
+	r.Run(":8000")
 }

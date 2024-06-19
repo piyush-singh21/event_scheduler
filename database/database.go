@@ -2,8 +2,9 @@ package database
 
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
 	"log"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var DB *sql.DB
@@ -26,7 +27,7 @@ func createTable() {
 	userTable := `
 		CREATE TABLE IF NOT EXISTS users(
 			id INT AUTO_INCREMENT PRIMARY KEY,
-			name VARCHAR(100) NOT NULL,
+			username VARCHAR(100) UNIQUE NOT NULL,
 			email VARCHAR(100) UNIQUE NOT NULL,
 			password VARCHAR(100) NOT NULL
 		);
@@ -46,7 +47,7 @@ func createTable() {
 	}
 	_, err = DB.Exec(eventTable)
 	if err != nil {
-		log.Fatal("Failed to crete user Table", err)
+		log.Fatal("Failed to create user Table", err)
 		return
 	}
 
