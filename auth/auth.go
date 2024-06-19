@@ -1,8 +1,10 @@
 package auth
 
 import (
+	"errors"
 	"event_scheduler/database"
 	"event_scheduler/model"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -27,27 +29,33 @@ func GenerateToken(User model.User) (string, error) {
 			Subject:   strconv.Itoa(User.ID),
 		},
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedToken, err := token.SignedString(jwtKey)
 	if err != nil {
+		fmt.Println(35)
 		return "", err
 	}
 	return signedToken, nil
 }
 func verifyUser(enteredPass, hashedPass string) error {
-	return bcrypt.CompareHashAndPassword([]byte(enteredPass), []byte(hashedPass))
+	fmt.Println(hashedPass)
+	fmt.Println(enteredPass)
+	return bcrypt.CompareHashAndPassword([]byte(hashedPass), []byte(enteredPass))
 }
 func AuthenticateUser(email, password string) (string, error) {
 	var user model.User
 	err := database.DB.QueryRow("SELECT id,password FROM users WHERE email=?", email).Scan(&user.ID, &user.Password)
 	if err != nil {
-		return "", err
+		fmt.Println(48)
+		return "", errors.New("email not found,please register")
 	}
 	if err = verifyUser(password, user.Password); err != nil {
+		fmt.Println(52)
 		return "", err
 	}
 	token, err := GenerateToken(user)
 	if err != nil {
+		fmt.Println(57)
 		return "", err
 	}
 	return token, nil
