@@ -8,12 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type RegResp struct {
-	ID    int    `json:"ID"`
-	Name  string `json:"Name"`
-	Email string `json:"Email"`
-}
-
 func RegisterUser(c *gin.Context) {
 	var user model.User
 	if err := c.ShouldBindJSON(&user); err != nil {
