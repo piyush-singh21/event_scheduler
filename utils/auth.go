@@ -38,13 +38,12 @@ func GenerateToken(User model.User) (string, error) {
 	return signedToken, nil
 }
 func verifyUser(enteredPass, hashedPass string) error {
-	fmt.Println(hashedPass)
-	fmt.Println(enteredPass)
 	return bcrypt.CompareHashAndPassword([]byte(hashedPass), []byte(enteredPass))
 }
 func AuthenticateUser(email, password string) (string, error) {
 	var user model.User
 	err := database.DB.QueryRow("SELECT id,password FROM users WHERE email=?", email).Scan(&user.ID, &user.Password)
+
 	if err != nil {
 		fmt.Println(48)
 		return "", errors.New("email not found,please register")
