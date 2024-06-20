@@ -17,6 +17,7 @@ func RegisterUser(c *gin.Context) {
 	err := service.ValidateUser(user)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "User created successfully"})
 }

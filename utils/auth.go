@@ -4,7 +4,6 @@ import (
 	"errors"
 	"event_scheduler/database"
 	"event_scheduler/model"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -32,7 +31,6 @@ func GenerateToken(User model.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedToken, err := token.SignedString(jwtKey)
 	if err != nil {
-		fmt.Println(35)
 		return "", err
 	}
 	return signedToken, nil
@@ -45,16 +43,13 @@ func AuthenticateUser(email, password string) (string, error) {
 	err := database.DB.QueryRow("SELECT id,password FROM users WHERE email=?", email).Scan(&user.ID, &user.Password)
 
 	if err != nil {
-		fmt.Println(48)
 		return "", errors.New("email not found,please register")
 	}
 	if err = verifyUser(password, user.Password); err != nil {
-		fmt.Println(52)
 		return "", err
 	}
 	token, err := GenerateToken(user)
 	if err != nil {
-		fmt.Println(57)
 		return "", err
 	}
 	return token, nil
