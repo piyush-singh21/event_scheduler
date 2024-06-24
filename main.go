@@ -2,15 +2,11 @@ package main
 
 import (
 	db "event_scheduler/database"
-	"event_scheduler/handler"
-
-	"github.com/gin-gonic/gin"
+	routes "event_scheduler/router"
 )
 
 func main() {
 	db.InitDB()
-	r := gin.Default()
-	r.POST("/register", handler.RegisterUser)
-	r.POST("/login", handler.Login)
+	r := routes.SetupRoute()
 	r.Run(":8000")
 }
