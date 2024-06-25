@@ -4,6 +4,7 @@ import (
 	"errors"
 	"event_scheduler/database"
 	"event_scheduler/model"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -19,7 +20,7 @@ type Claims struct {
 }
 
 func GenerateToken(User model.User) (string, error) {
-	expirationTime := time.Now().Add(2 * time.Minute) //Token expires in 2 minutes
+	expirationTime := time.Now().Add(2 * time.Hour) //Token expires in 2 minutes
 	claims := &Claims{
 		UserID: User.ID,
 		StandardClaims: jwt.StandardClaims{
@@ -36,17 +37,18 @@ func GenerateToken(User model.User) (string, error) {
 	return signedToken, nil
 }
 func ValidateToken(tokenString string) (*Claims, error) {
-	claims := Claims{}
+	claims := &Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return jwtKey, nil
 	})
 	if err != nil {
+		fmt.Println(err)
 		return nil, errors.New("token incorrect")
 	}
 	if !token.Valid {
 		return nil, errors.New("token not valid")
 	}
-	return &claims, nil
+	return claims, nil
 }
 func verifyUser(enteredPass, hashedPass string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPass), []byte(enteredPass))
