@@ -12,5 +12,7 @@ func SetupRoute() *gin.Engine {
 	r.POST("/register", handler.RegisterUser)
 	r.POST("/login", handler.Login)
 	r.GET("/events", middleware.IsLogin(), handler.FindEvent)
+	r.POST("/createEvent", middleware.IsLogin(), handler.CreateEvent)
+	r.DELETE("/deleteEvent", middleware.IsLogin(), handler.DeleteEvent)
 	return r
 }
