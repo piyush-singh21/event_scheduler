@@ -1,0 +1,15 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Event Schedular",
+        "title": "Documenting API (Event Scheduling)",
+        "contact": {
+            "name": "Piyush Singh",
+            "url": "piyush.singh@stl.tech",
+            "email": "singh.piyush00034@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8000",
+    "paths": {}
+}

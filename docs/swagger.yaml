@@ -1,0 +1,11 @@
+host: localhost:8000
+info:
+  contact:
+    email: singh.piyush00034@gmail.com
+    name: Piyush Singh
+    url: piyush.singh@stl.tech
+  description: Event Schedular
+  title: Documenting API (Event Scheduling)
+  version: "1.0"
+paths: {}
+swagger: "2.0"

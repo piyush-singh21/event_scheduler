@@ -20,7 +20,7 @@ type Claims struct {
 }
 
 func GenerateToken(User model.User) (string, error) {
-	expirationTime := time.Now().Add(2 * time.Hour) //Token expires in 2 minutes
+	expirationTime := time.Now().Add(2 * time.Hour) //Token expires in 2 hours
 	claims := &Claims{
 		UserID: User.ID,
 		StandardClaims: jwt.StandardClaims{
