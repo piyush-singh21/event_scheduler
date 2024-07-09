@@ -1,6 +1,6 @@
 module event_scheduler
 
-go 1.19
+go 1.22
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -48,3 +48,5 @@ require (
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+require github.com/joho/godotenv v1.5.1

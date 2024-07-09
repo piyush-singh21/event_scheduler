@@ -26,3 +26,8 @@ func AddEvent(EventAdd model.EventAdd, parsedTime time.Time, key int) {
 func UpdateEvent(updateEvent model.UpdateEvent) {
 	DB.Exec("UPDATE events SET title=?,description=?,date=? WHERE id=?", updateEvent.Title, updateEvent.Description, updateEvent.Date, updateEvent.ID)
 }
+func GetEmail(userId int) string {
+	var email string
+	DB.QueryRow("SELECT email FROM users WHERE id=?", userId).Scan(&email)
+	return email
+}
