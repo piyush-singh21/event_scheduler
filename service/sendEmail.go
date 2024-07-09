@@ -17,7 +17,7 @@ func GetDataToSendMail(userId int, eventAdd model.EventAdd) error {
 	body := fmt.Sprintf("Dear user,\n\n event has been created :\n\nTitle: %s\n Description: %s\nDate: %s\n\nBest regards", eventAdd.Title, eventAdd.Description, eventAdd.Date)
 	err := sendMail(email, subject, body)
 	if err != nil {
-		return fmt.Errorf("Failed to send mail", err)
+		return fmt.Errorf("failed to send mail %v", err)
 	}
 	return nil
 }
