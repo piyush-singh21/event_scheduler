@@ -22,3 +22,7 @@ func DeleteEvent(deleteEvent model.DeleteEvent) error {
 func AddEvent(EventAdd model.EventAdd, parsedTime time.Time, key int) {
 	DB.Exec("INSERT INTO events (title,description,userId,date) VALUES (?,?,?,?)", EventAdd.Title, EventAdd.Description, key, parsedTime)
 }
+
+func UpdateEvent(updateEvent model.UpdateEvent) {
+	DB.Exec("UPDATE events SET title=?,description=?,date=? WHERE id=?", updateEvent.Title, updateEvent.Description, updateEvent.Date, updateEvent.ID)
+}

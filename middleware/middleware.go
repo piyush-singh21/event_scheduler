@@ -12,7 +12,7 @@ func IsLogin() gin.HandlerFunc {
 		tokenString := ctx.GetHeader("Authorization")
 		if tokenString == "" {
 			ctx.JSON(http.StatusUnauthorized, gin.H{
-				"error": "unauthorized access",
+				"error": "unable to login",
 			})
 			ctx.Abort()
 			return

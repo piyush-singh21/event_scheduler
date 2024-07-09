@@ -25,5 +25,5 @@ func DeleteEvent(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"success": "Event removed successfully"})
+	c.JSON(http.StatusAccepted, gin.H{"success": "Event removed successfully"})
 }

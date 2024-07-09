@@ -29,3 +29,14 @@ func ValidateDeleteEvent(deleteEvent model.DeleteEvent, c *gin.Context) error {
 	}
 	return nil
 }
+
+func ValidateUpdateEvent(updateEvent model.UpdateEvent, c *gin.Context) error {
+	id, _ := c.Get("id")
+	var userId int
+	database.DB.QueryRow("SELECT userId FROM events WHERE id=?", updateEvent.ID).Scan(&userId)
+	if userId != id {
+		return errors.New("you are not allowed to update this event")
+	}
+	return nil
+
+}

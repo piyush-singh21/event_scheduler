@@ -43,10 +43,10 @@ func ValidateToken(tokenString string) (*Claims, error) {
 	})
 	if err != nil {
 		fmt.Println(err)
-		return nil, errors.New("token incorrect")
+		return nil, errors.New("unable to login")
 	}
 	if !token.Valid {
-		return nil, errors.New("token not valid")
+		return nil, errors.New("unable to login")
 	}
 	return claims, nil
 }
