@@ -8,6 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Login user by taking his email and password
+// @Schemes
+// @Description register user
+// @Tags example
+// @Accept json
+// @Produce json
+// @Param order body model.LoginRequest true "Login User"
+// @Success 200 {string} token
+// @Router /login [post]
 func Login(c *gin.Context) {
 	var logReq model.LoginRequest
 	if err := c.ShouldBindJSON(&logReq); err != nil {

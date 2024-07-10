@@ -8,16 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// RegisterUser registers a new user to the database
-// @Summary Register a new user
-// @Description Register a new user and add the details in the database
-// @Tags users
-// @Accept  json
-// @Produce  json
-// @Param   user body User true "User registration request"
-// @Success 200 {object} User
-// @Failure 400 {object} User
-// @Failure 500 {object} User
+// @Summary Register user by taking his email and password
+// @Schemes
+// @Description register user
+// @Tags example
+// @Accept json
+// @Produce json
+// @Param order body model.User true "Register User"
+// @Success 200 {User created successfully}
 // @Router /register [post]
 func RegisterUser(c *gin.Context) {
 	var user model.User

@@ -1,3 +1,49 @@
+definitions:
+  model.DeleteEvent:
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+  model.EventAdd:
+    properties:
+      Date:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  model.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  model.UpdateEvent:
+    properties:
+      Date:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+  model.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+    type: object
 host: localhost:8000
 info:
   contact:
@@ -7,5 +53,130 @@ info:
   description: Event Schedular
   title: Documenting API (Event Scheduling)
   version: "1.0"
-paths: {}
+paths:
+  /createEvent:
+    post:
+      consumes:
+      - application/json
+      description: Create event after logging in
+      parameters:
+      - description: Create Event
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/model.EventAdd'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create event
+      tags:
+      - example
+  /deleteEvent:
+    delete:
+      consumes:
+      - application/json
+      description: Delete event mapped to user after logging in
+      parameters:
+      - description: Delete Event
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/model.DeleteEvent'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete event
+      tags:
+      - example
+  /events:
+    get:
+      consumes:
+      - application/json
+      description: Get list of all event after logging in
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get event
+      tags:
+      - example
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: register user
+      parameters:
+      - description: Login User
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Login user by taking his email and password
+      tags:
+      - example
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: register user
+      parameters:
+      - description: Register User
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: User
+      summary: Register user by taking his email and password
+      tags:
+      - example
+  /updateEvent:
+    put:
+      consumes:
+      - application/json
+      description: Update event mapped to user after logging in
+      parameters:
+      - description: Update Event
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateEvent'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Update event
+      tags:
+      - example
 swagger: "2.0"

@@ -9,6 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Delete event
+// @Schemes
+// @Description Delete event mapped to user after logging in
+// @Tags example
+// @Accept json
+// @Produce json
+// @Param order body model.DeleteEvent true "Delete Event"
+// @Success 200 {string} Event Deleted Successfully
+// @Router /deleteEvent [delete]
 func DeleteEvent(c *gin.Context) {
 	var deleteEvent model.DeleteEvent
 	if err := c.ShouldBindJSON(&deleteEvent); err != nil {

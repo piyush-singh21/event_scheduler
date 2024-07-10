@@ -9,6 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Update event
+// @Schemes
+// @Description Update event mapped to user after logging in
+// @Tags example
+// @Accept json
+// @Produce json
+// @Param order body model.UpdateEvent true "Update Event"
+// @Success 200 {string} Event Updated Successfully
+// @Router /updateEvent [put]
 func UpdateEvent(c *gin.Context) {
 	var updateEvent model.UpdateEvent
 	if err := c.ShouldBindJSON(&updateEvent); err != nil {
