@@ -8,6 +8,14 @@ import (
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"golang.org/x/oauth2"
+	"google.golang.org/api/calendar/v3"
+)
+
+var (
+	config      *oauth2.Config
+	token       *oauth2.Token
+	calendarSrv *calendar.Service
 )
 
 // @Title Documenting API (Event Scheduling)

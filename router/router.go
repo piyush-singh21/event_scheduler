@@ -15,5 +15,6 @@ func SetupRoute() *gin.Engine {
 	r.POST("/createEvent", middleware.IsLogin(), handler.CreateEvent)
 	r.DELETE("/deleteEvent", middleware.IsLogin(), handler.DeleteEvent)
 	r.PUT("/updateEvent", middleware.IsLogin(), handler.UpdateEvent)
+	r.GET("/oauth2callback", handler.Auth2Callback)
 	return r
 }
