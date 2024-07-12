@@ -17,6 +17,14 @@ const docTemplate = `{
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter 'Bearer' [space] and then your token in the text input below.\n\nExample: \"Bearer abcdef12345\""
+        }
+    },
     "basePath": "{{.BasePath}}",
     "paths": {
         "/createEvent": {
@@ -50,7 +58,11 @@ const docTemplate = `{
                             "type": "string"
                         }
                     }
-                }
+                },               "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/deleteEvent": {
@@ -84,7 +96,12 @@ const docTemplate = `{
                             "type": "string"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/events": {
@@ -107,7 +124,12 @@ const docTemplate = `{
                             "type": "string"
                         }
                     }
-                }
+                },
+               "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/login": {
@@ -209,7 +231,12 @@ const docTemplate = `{
                             "type": "string"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         }
     },
