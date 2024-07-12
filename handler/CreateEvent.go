@@ -16,6 +16,7 @@ import (
 	"google.golang.org/api/option"
 )
 
+// CreateEvent Any registered user can create an event
 // @Summary Create event
 // @Schemes
 // @Description Create event after logging in
@@ -25,8 +26,6 @@ import (
 // @Param order body model.EventAdd true "Create Event"
 // @Success 200 {string} Event Created Successfully
 // @Router /createEvent [post]
-
-// CreateEvent Any registered user can create an event
 func CreateEvent(c *gin.Context) {
 	var eventAdd model.EventAdd
 	if err := c.ShouldBindJSON(&eventAdd); err != nil {

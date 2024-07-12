@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// FindEvent find all the events
 // @Summary Get event
 // @Schemes
 // @Description Get list of all event after logging in
@@ -15,8 +16,6 @@ import (
 // @Produce json
 // @Success 200 {string} All Events
 // @Router /events [get]
-
-// FindEvent find all the events
 func FindEvent(c *gin.Context) {
 	res, err := service.GetAllEvent()
 	if err != nil {

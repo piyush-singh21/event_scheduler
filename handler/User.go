@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// RegisterUser For first time users,you need to register first
 // @Summary Register user by taking his email and password
 // @Schemes
 // @Description register user
@@ -17,8 +18,6 @@ import (
 // @Param order body model.User true "Register User"
 // @Success 200 {User created successfully}
 // @Router /register [post]
-
-// RegisterUser For first time users,you need to register first
 func RegisterUser(c *gin.Context) {
 	var user model.User
 	if err := c.ShouldBindJSON(&user); err != nil {

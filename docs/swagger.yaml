@@ -57,17 +57,17 @@ paths:
   /createEvent:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Create event after logging in
       parameters:
-      - description: Create Event
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/model.EventAdd'
+        - description: Create Event
+          in: body
+          name: order
+          required: true
+          schema:
+            $ref: "#/definitions/model.EventAdd"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -75,21 +75,21 @@ paths:
             type: string
       summary: Create event
       tags:
-      - example
+        - example
   /deleteEvent:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete event mapped to user after logging in
       parameters:
-      - description: Delete Event
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/model.DeleteEvent'
+        - description: Delete Event
+          in: body
+          name: order
+          required: true
+          schema:
+            $ref: "#/definitions/model.DeleteEvent"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -97,14 +97,14 @@ paths:
             type: string
       summary: Delete event
       tags:
-      - example
+        - example
   /events:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get list of all event after logging in
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -112,21 +112,21 @@ paths:
             type: string
       summary: Get event
       tags:
-      - example
+        - example
   /login:
     post:
       consumes:
-      - application/json
+        - application/json
       description: register user
       parameters:
-      - description: Login User
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/model.LoginRequest'
+        - description: Login User
+          in: body
+          name: order
+          required: true
+          schema:
+            $ref: "#/definitions/model.LoginRequest"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -134,21 +134,21 @@ paths:
             type: string
       summary: Login user by taking his email and password
       tags:
-      - example
+        - example
   /register:
     post:
       consumes:
-      - application/json
+        - application/json
       description: register user
       parameters:
-      - description: Register User
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/model.User'
+        - description: Register User
+          in: body
+          name: order
+          required: true
+          schema:
+            $ref: "#/definitions/model.User"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -156,21 +156,21 @@ paths:
             type: User
       summary: Register user by taking his email and password
       tags:
-      - example
+        - example
   /updateEvent:
     put:
       consumes:
-      - application/json
+        - application/json
       description: Update event mapped to user after logging in
       parameters:
-      - description: Update Event
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/model.UpdateEvent'
+        - description: Update Event
+          in: body
+          name: order
+          required: true
+          schema:
+            $ref: "#/definitions/model.UpdateEvent"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -178,5 +178,5 @@ paths:
             type: string
       summary: Update event
       tags:
-      - example
+        - example
 swagger: "2.0"
