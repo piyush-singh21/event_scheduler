@@ -14,42 +14,6 @@ import (
 	"google.golang.org/api/calendar/v3"
 )
 
-// type CalendarService struct {
-// 	srv *calendar.Service
-// }
-
-// var (
-// 	config *oauth2.Config
-// )
-
-// func NewCalendarService() *CalendarService {
-// 	return &CalendarService{}
-// }
-// func LoadAuthConfig() (*oauth2.Config, error) {
-// 	b, err := ioutil.ReadFile("credentials.json")
-// 	// fmt.Println("token\n", b)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("unable to read client secret file :%v", err)
-// 	}
-// 	config, err := google.ConfigFromJSON(b, calendar.CalendarScope)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("unable to parse client secret file to config: %v", err)
-// 	}
-// 	return config, nil
-// }
-
-// func HandleGoogleLogin(c *gin.Context, config *oauth2.Config) {
-// 	url := config.AuthCodeURL("state-token", oauth2.AccessTypeOffline)
-// 	c.Redirect(http.StatusTemporaryRedirect, url)
-// }
-// func HandleGoogleCallback(config *oauth2.Config, code string) (*oauth2.Token, error) {
-// 	tok, err := config.Exchange(context.Background(), code)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("unable to retrive web token %v", err)
-// 	}
-// 	return tok, nil
-// }
-
 // Retrieve a token, saves the token, then returns the generated client.
 func GetClient(config *oauth2.Config) *http.Client {
 	// The file token.json stores the user's access and refresh tokens, and is
@@ -107,25 +71,31 @@ func saveToken(path string, token *oauth2.Token) {
 }
 func AddEvent(svr *calendar.Service, event model.EventAdd) {
 	layout := "2006-01-02T15:04:05"
-	timeString := event.Date
-	startTime, err := time.Parse(layout, timeString)
+	// timeString := event.Date
+	location, err := time.LoadLocation("Asia/Kolkata")
+	if err != nil {
+		log.Fatalf("Unable to load location: %v", err)
+	}
+	startTime, err := time.ParseInLocation(layout, event.Date, location)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 	endTime := startTime.Add(30 * time.Minute)
 	endTimeString := endTime.Format(time.RFC3339)
+	startTimeString := startTime.Format(time.RFC3339)
 	// timeString += "Z"
 	// endTimeString += "Z"
 	e := &calendar.Event{
 		Summary:     event.Title,
 		Description: event.Description,
 		Start: &calendar.EventDateTime{
-			DateTime: timeString,
-			TimeZone: "UTC",
+			DateTime: startTimeString,
+			TimeZone: "Asia/Kolkata",
 		},
 		End: &calendar.EventDateTime{
 			DateTime: endTimeString,
-			TimeZone: "UTC",
+			TimeZone: "Asia/Kolkata",
 		},
 	}
 	_, err = svr.Events.Insert("primary", e).Do()
