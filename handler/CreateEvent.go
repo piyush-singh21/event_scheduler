@@ -39,7 +39,8 @@ func CreateEvent(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	err = service.GetDataToSendMail(val, eventAdd)
+	body := fmt.Sprintf("Dear user,\n\n event has been created :\n\nTitle: %s\n Description: %s\nStartTime: %s\nEndTime: %s\nLocation: %s\n\n\nBest regards", eventAdd.Title, eventAdd.Description, eventAdd.StartDate, eventAdd.EndDate, eventAdd.Location)
+	err = service.GetDataToSendMail(val, body, "create")
 	if err != nil {
 		fmt.Println(err)
 	}

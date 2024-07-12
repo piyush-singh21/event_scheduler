@@ -3,7 +3,6 @@ package service
 import (
 	"errors"
 	"event_scheduler/database"
-	"event_scheduler/model"
 	"fmt"
 	"net/smtp"
 	"os"
@@ -12,10 +11,15 @@ import (
 )
 
 // Send an automated mail to the user who created the event
-func GetDataToSendMail(userId int, eventAdd model.EventAdd) error {
+func GetDataToSendMail(userId int, body, signal string) error {
 	email := database.GetEmail(userId)
-	subject := "Event Created"
-	body := fmt.Sprintf("Dear user,\n\n event has been created :\n\nTitle: %s\n Description: %s\nStartTime: %s\nEndTime: %s\nLocation: %s\n\n\nBest regards", eventAdd.Title, eventAdd.Description, eventAdd.StartDate, eventAdd.EndDate, eventAdd.Location)
+	subject := ""
+	if signal == "register" {
+		subject = "Registerd to event"
+
+	} else {
+		subject = "Event Created"
+	}
 	err := sendMail(email, subject, body)
 	if err != nil {
 		return fmt.Errorf("failed to send mail %v", err)
