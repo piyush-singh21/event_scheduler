@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// Validate user's email and password while registration
 func ValidateUser(user model.User) error {
 	if len(user.Name) <= 2 {
 		return errors.New("length of string should be greater than 2")

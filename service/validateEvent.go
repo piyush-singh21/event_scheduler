@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Used for validating the existing event
 func ValidateEvent(EventAdd model.EventAdd, key int) error {
 	parsedTime, err := auth.ParseDate(EventAdd.Date)
 	if err != nil {
@@ -22,6 +23,8 @@ func ValidateEvent(EventAdd model.EventAdd, key int) error {
 	database.AddEvent(EventAdd, parsedTime, key)
 	return nil
 }
+
+// Check if user is deleting his events only
 func ValidateDeleteEvent(deleteEvent model.DeleteEvent, c *gin.Context) error {
 	id, _ := c.Get("id")
 	if deleteEvent.ID != id {
@@ -30,6 +33,7 @@ func ValidateDeleteEvent(deleteEvent model.DeleteEvent, c *gin.Context) error {
 	return nil
 }
 
+// Check if user is updating his events only
 func ValidateUpdateEvent(updateEvent model.UpdateEvent, c *gin.Context) error {
 	id, _ := c.Get("id")
 	var userId int

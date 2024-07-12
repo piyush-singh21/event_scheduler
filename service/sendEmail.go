@@ -11,6 +11,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// Send an automated mail to the user who created the event
 func GetDataToSendMail(userId int, eventAdd model.EventAdd) error {
 	email := database.GetEmail(userId)
 	subject := "Event Created"

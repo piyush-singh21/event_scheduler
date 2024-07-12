@@ -26,6 +26,7 @@ import (
 // @Success 200 {string} Event Created Successfully
 // @Router /createEvent [post]
 
+// CreateEvent Any registered user can create an event
 func CreateEvent(c *gin.Context) {
 	var eventAdd model.EventAdd
 	if err := c.ShouldBindJSON(&eventAdd); err != nil {

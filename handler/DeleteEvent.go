@@ -18,6 +18,8 @@ import (
 // @Param order body model.DeleteEvent true "Delete Event"
 // @Success 200 {string} Event Deleted Successfully
 // @Router /deleteEvent [delete]
+
+// DeleteEvent User can only delete events created by him
 func DeleteEvent(c *gin.Context) {
 	var deleteEvent model.DeleteEvent
 	if err := c.ShouldBindJSON(&deleteEvent); err != nil {

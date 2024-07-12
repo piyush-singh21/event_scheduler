@@ -17,6 +17,8 @@ import (
 // @Param order body model.LoginRequest true "Login User"
 // @Success 200 {string} token
 // @Router /login [post]
+
+// Login Registered users can login, once you login you will be provided with a token
 func Login(c *gin.Context) {
 	var logReq model.LoginRequest
 	if err := c.ShouldBindJSON(&logReq); err != nil {
