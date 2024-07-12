@@ -1,10 +1,10 @@
 package model
 
-import "time"
-
 type EventResp struct {
-	ID          int64     `json:"event_id"`
-	Title       string    `json:"title"`
-	Description string    `json:"description"`
-	Date        time.Time `json:"Date"`
+	ID          int64  `json:"event_id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	StartDate   string `json:"startDate"`
+	EndDate     string `json:"endDate"`
+	Location    string `json:"location"`
 }

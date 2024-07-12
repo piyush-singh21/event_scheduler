@@ -12,15 +12,22 @@ import (
 
 // Used for validating the existing event
 func ValidateEvent(EventAdd model.EventAdd, key int) error {
-	parsedTime, err := auth.ParseDate(EventAdd.Date)
+	parsedStartTime, err := auth.ParseDate(EventAdd.StartDate)
 	if err != nil {
 		return err
 	}
-	if parsedTime.Before(time.Now()) {
+	parsedEndTime, err := auth.ParseDate(EventAdd.EndDate)
+	if err != nil {
+		return err
+	}
+	if parsedStartTime.Before(time.Now()) {
 		return errors.New("time should be in future")
 	}
+	if parsedEndTime.Compare(parsedStartTime) <= 0 {
+		return errors.New("end time should be ahead of start time")
+	}
 
-	database.AddEvent(EventAdd, parsedTime, key)
+	database.AddEvent(EventAdd, parsedStartTime, parsedEndTime, key)
 	return nil
 }
 

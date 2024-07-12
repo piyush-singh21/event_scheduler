@@ -19,8 +19,8 @@ func DeleteEvent(deleteEvent model.DeleteEvent) error {
 	DB.Exec("DELETE FROM events WHERE title=? AND userId=?", deleteEvent.Title, deleteEvent.ID)
 	return nil
 }
-func AddEvent(EventAdd model.EventAdd, parsedTime time.Time, key int) {
-	DB.Exec("INSERT INTO events (title,description,userId,date) VALUES (?,?,?,?)", EventAdd.Title, EventAdd.Description, key, parsedTime)
+func AddEvent(EventAdd model.EventAdd, parsedStartTime time.Time, parsedEndTime time.Time, key int) {
+	DB.Exec("INSERT INTO events (title,description,userId,StartDate,EndDate,Location) VALUES (?,?,?,?,?,?)", EventAdd.Title, EventAdd.Description, key, parsedStartTime, parsedEndTime, EventAdd.Location)
 }
 
 func UpdateEvent(updateEvent model.UpdateEvent) {

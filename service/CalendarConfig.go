@@ -76,12 +76,16 @@ func AddEvent(svr *calendar.Service, event model.EventAdd) {
 	if err != nil {
 		log.Fatalf("Unable to load location: %v", err)
 	}
-	startTime, err := time.ParseInLocation(layout, event.Date, location)
+	startTime, err := time.ParseInLocation(layout, event.StartDate, location)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	endTime := startTime.Add(30 * time.Minute)
+	endTime, err := time.ParseInLocation(layout, event.EndDate, location)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	endTimeString := endTime.Format(time.RFC3339)
 	startTimeString := startTime.Format(time.RFC3339)
 	// timeString += "Z"
