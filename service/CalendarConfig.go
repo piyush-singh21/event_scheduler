@@ -112,15 +112,15 @@ func AddEvent(id int, svr *calendar.Service, event model.EventAdd) {
 
 }
 func GetCalendarEvent(eventId int, svr *calendar.Service) *calendar.Event {
-	id := strconv.Itoa(eventId) + "event"
+	id := convertToString(eventId)
 	event, _ := svr.Events.Get("primary", id).Do()
 	return event
 }
-func UpdateCalendarEvent(id string, event *calendar.Event, svr *calendar.Service) {
+func RegisterCalendarEvent(id string, event *calendar.Event, svr *calendar.Service) {
 	svr.Events.Update("primary", id, event).Do()
 }
-func UpdateCalendarData(updateEvent model.UpdateEvent, svr *calendar.Service) {
-	eventId := strconv.Itoa(updateEvent.ID) + "event"
+func UpdateCalendarData(updateEvent model.UpdateEvent, attendees []*calendar.EventAttendee, svr *calendar.Service) {
+	eventId := convertToString(updateEvent.ID)
 	layout := "2006-01-02T15:04:05"
 	// timeString := event.Date
 	location, err := time.LoadLocation("Asia/Kolkata")
@@ -151,8 +151,12 @@ func UpdateCalendarData(updateEvent model.UpdateEvent, svr *calendar.Service) {
 			DateTime: endTimeString,
 			TimeZone: "Asia/Kolkata",
 		},
-		Location: updateEvent.Location,
+		Attendees: attendees,
+		Location:  updateEvent.Location,
 	}
 	svr.Events.Update("primary", eventId, e).Do()
 
+}
+func convertToString(key int) string {
+	return strconv.Itoa(key) + "event"
 }

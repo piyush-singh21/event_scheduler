@@ -57,6 +57,6 @@ func RegisterEvent(c *gin.Context) {
 	event := service.GetCalendarEvent(id, svr)
 	userMail := database.GetUserMail(key)
 	event.Attendees = append(event.Attendees, &calendar.EventAttendee{Email: userMail})
-	service.UpdateCalendarEvent(event.Id, event, svr)
+	service.RegisterCalendarEvent(event.Id, event, svr)
 	c.JSON(http.StatusOK, gin.H{"success": "Registered to event"})
 }

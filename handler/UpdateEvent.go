@@ -60,7 +60,8 @@ func UpdateEvent(c *gin.Context) {
 	}
 	// id := strconv.Itoa(updateEvent.ID) + "event"
 	// event := service.GetCalendarEvent(updateEvent.ID, svr)
-	service.UpdateCalendarData(updateEvent, svr)
+	event := service.GetCalendarEvent(updateEvent.ID, svr)
+	service.UpdateCalendarData(updateEvent, event.Attendees, svr)
 	c.JSON(http.StatusOK, gin.H{"success": "event updated"})
 
 }
