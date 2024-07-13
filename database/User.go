@@ -14,3 +14,9 @@ func AddUser(user model.User) error {
 	}
 	return nil
 }
+
+func GetUserMail(id int) string {
+	var mail string
+	DB.QueryRow("SELECT email FROM users WHERE id=?", id).Scan(&mail)
+	return mail
+}

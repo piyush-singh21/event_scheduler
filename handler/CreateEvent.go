@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"event_scheduler/database"
 	"event_scheduler/model"
 	"event_scheduler/service"
 	auth "event_scheduler/utils"
@@ -65,7 +66,8 @@ func CreateEvent(c *gin.Context) {
 	if err != nil {
 		log.Fatalf("Unable to retrieve Calendar client: %v", err)
 	}
-	service.AddEvent(srv, eventAdd)
+	id := database.GetLastEntryId()
+	service.AddEvent(id, srv, eventAdd)
 
 	c.JSON(http.StatusCreated, gin.H{"success": "Event added successfully"})
 }

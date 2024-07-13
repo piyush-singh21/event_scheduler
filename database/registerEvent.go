@@ -15,3 +15,24 @@ func FindEvent(key int) model.EventResp {
 	DB.QueryRow("SELECT id,title,description,StartDate,EndDate,Location FROM events WHERE id=?", key).Scan(&eventResp.ID, &eventResp.Title, &eventResp.Description, &eventResp.StartDate, &eventResp.EndDate, &eventResp.Location)
 	return eventResp
 }
+
+func GetEventId(id int) int {
+	var eventId int
+	DB.QueryRow("SELECT id from events WHERE id=?", id).Scan(&eventId)
+	return eventId
+}
+func GetEmailFromUsers(key int) string {
+	var email string
+	DB.QueryRow("SELECT email from users WHERE id=?", key).Scan(&email)
+	return email
+}
+func GetEmailFromRegister(email string, id int) string {
+	var registerEmail string
+	DB.QueryRow("SELECT email from register WHERE email=? AND eventId=?", email, id).Scan(&registerEmail)
+	return registerEmail
+}
+func GetUidFromEvents(eventId int) int {
+	var userId int
+	DB.QueryRow("SELECT userId FROM events WHERE id=?", eventId).Scan(&userId)
+	return userId
+}

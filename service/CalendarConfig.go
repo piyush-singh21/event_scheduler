@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"golang.org/x/oauth2"
@@ -69,7 +70,7 @@ func saveToken(path string, token *oauth2.Token) {
 	defer f.Close()
 	json.NewEncoder(f).Encode(token)
 }
-func AddEvent(svr *calendar.Service, event model.EventAdd) {
+func AddEvent(id int, svr *calendar.Service, event model.EventAdd) {
 	layout := "2006-01-02T15:04:05"
 	// timeString := event.Date
 	location, err := time.LoadLocation("Asia/Kolkata")
@@ -88,9 +89,10 @@ func AddEvent(svr *calendar.Service, event model.EventAdd) {
 	}
 	endTimeString := endTime.Format(time.RFC3339)
 	startTimeString := startTime.Format(time.RFC3339)
-	// timeString += "Z"
-	// endTimeString += "Z"
+	eventId := strconv.Itoa(id) + "event"
+	// fmt.Println(eventId)
 	e := &calendar.Event{
+		Id:          eventId,
 		Summary:     event.Title,
 		Description: event.Description,
 		Start: &calendar.EventDateTime{
@@ -101,10 +103,19 @@ func AddEvent(svr *calendar.Service, event model.EventAdd) {
 			DateTime: endTimeString,
 			TimeZone: "Asia/Kolkata",
 		},
+		Location: event.Location,
 	}
 	_, err = svr.Events.Insert("primary", e).Do()
 	if err != nil {
 		log.Fatalf("Unable to add event %v", err)
 	}
 
+}
+func GetCalendarEvent(eventId int, svr *calendar.Service) *calendar.Event {
+	id := strconv.Itoa(eventId) + "event"
+	event, _ := svr.Events.Get("primary", id).Do()
+	return event
+}
+func UpdateCalendarEvent(id string, event *calendar.Event, svr *calendar.Service) {
+	svr.Events.Update("primary", id, event).Do()
 }

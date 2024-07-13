@@ -31,3 +31,8 @@ func GetEmail(userId int) string {
 	DB.QueryRow("SELECT email FROM users WHERE id=?", userId).Scan(&email)
 	return email
 }
+func GetLastEntryId() int {
+	var id int
+	DB.QueryRow("SELECT id FROM events order by id desc limit 1").Scan(&id)
+	return id
+}

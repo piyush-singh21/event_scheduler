@@ -4,25 +4,23 @@ import (
 	"errors"
 	"event_scheduler/database"
 	"event_scheduler/model"
-	auth "event_scheduler/utils"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
-func ValidateRegistrationId(id int, c *gin.Context) (model.EventResp, error) {
-	var eventId int
-	var email string
-	var registerEmail string
-	database.DB.QueryRow("SELECT id from events WHERE id=?", id).Scan(&eventId)
+func ValidateRegistrationId(key, id int, c *gin.Context) (model.EventResp, error) {
+	eventId := database.GetEventId(id)
 	if id != eventId {
 		return model.EventResp{}, errors.New("event does not exist")
 	}
-	keyInterface, _ := c.Get("id")
-	key := auth.Convert(keyInterface)
 	eventResp := database.FindEvent(id)
-	database.DB.QueryRow("SELECT email from users WHERE id=?", key).Scan(&email)
-	database.DB.QueryRow("SELECT email from register WHERE email=? AND eventId=?", email, id).Scan(&registerEmail)
-	if registerEmail == email {
+	email := database.GetEmailFromUsers(key)
+	registerEmail := database.GetEmailFromRegister(email, id)
+	userId := database.GetUidFromEvents(eventId)
+	fmt.Println(key)
+	fmt.Println(userId)
+	if registerEmail == email || userId == key {
 		return model.EventResp{}, errors.New("already registered to event")
 	}
 
