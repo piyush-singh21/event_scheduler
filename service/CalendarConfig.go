@@ -119,3 +119,40 @@ func GetCalendarEvent(eventId int, svr *calendar.Service) *calendar.Event {
 func UpdateCalendarEvent(id string, event *calendar.Event, svr *calendar.Service) {
 	svr.Events.Update("primary", id, event).Do()
 }
+func UpdateCalendarData(updateEvent model.UpdateEvent, svr *calendar.Service) {
+	eventId := strconv.Itoa(updateEvent.ID) + "event"
+	layout := "2006-01-02T15:04:05"
+	// timeString := event.Date
+	location, err := time.LoadLocation("Asia/Kolkata")
+	if err != nil {
+		log.Fatalf("Unable to load location: %v", err)
+	}
+	startTime, err := time.ParseInLocation(layout, updateEvent.StartDate, location)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	endTime, err := time.ParseInLocation(layout, updateEvent.EndDate, location)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	endTimeString := endTime.Format(time.RFC3339)
+	startTimeString := startTime.Format(time.RFC3339)
+	e := &calendar.Event{
+		Id:          eventId,
+		Summary:     updateEvent.Title,
+		Description: updateEvent.Description,
+		Start: &calendar.EventDateTime{
+			DateTime: startTimeString,
+			TimeZone: "Asia/Kolkata",
+		},
+		End: &calendar.EventDateTime{
+			DateTime: endTimeString,
+			TimeZone: "Asia/Kolkata",
+		},
+		Location: updateEvent.Location,
+	}
+	svr.Events.Update("primary", eventId, e).Do()
+
+}

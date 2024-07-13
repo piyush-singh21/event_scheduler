@@ -24,7 +24,7 @@ func AddEvent(EventAdd model.EventAdd, parsedStartTime time.Time, parsedEndTime 
 }
 
 func UpdateEvent(updateEvent model.UpdateEvent) {
-	DB.Exec("UPDATE events SET title=?,description=?,date=? WHERE id=?", updateEvent.Title, updateEvent.Description, updateEvent.Date, updateEvent.ID)
+	DB.Exec("UPDATE events SET title=?,description=?,StartDate=?,EndDate=?,Location=? WHERE id=?", updateEvent.Title, updateEvent.Description, updateEvent.StartDate, updateEvent.EndDate, updateEvent.Location, updateEvent.ID)
 }
 func GetEmail(userId int) string {
 	var email string

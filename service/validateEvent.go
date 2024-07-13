@@ -43,10 +43,25 @@ func ValidateDeleteEvent(deleteEvent model.DeleteEvent, c *gin.Context) error {
 // Check if user is updating his events only
 func ValidateUpdateEvent(updateEvent model.UpdateEvent, c *gin.Context) error {
 	id, _ := c.Get("id")
+	authId := auth.Convert(id)
 	var userId int
 	database.DB.QueryRow("SELECT userId FROM events WHERE id=?", updateEvent.ID).Scan(&userId)
-	if userId != id {
+	if userId != authId {
 		return errors.New("you are not allowed to update this event")
+	}
+	parsedStartTime, err := auth.ParseDate(updateEvent.StartDate)
+	if err != nil {
+		return err
+	}
+	parsedEndTime, err := auth.ParseDate(updateEvent.EndDate)
+	if err != nil {
+		return err
+	}
+	if parsedStartTime.Before(time.Now()) {
+		return errors.New("time should be in future")
+	}
+	if parsedEndTime.Compare(parsedStartTime) <= 0 {
+		return errors.New("end time should be ahead of start time")
 	}
 	return nil
 
