@@ -4,7 +4,6 @@ import (
 	"errors"
 	"event_scheduler/database"
 	"event_scheduler/model"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,8 +17,6 @@ func ValidateRegistrationId(key, id int, c *gin.Context) (model.EventResp, error
 	email := database.GetEmailFromUsers(key)
 	registerEmail := database.GetEmailFromRegister(email, id)
 	userId := database.GetUidFromEvents(eventId)
-	fmt.Println(key)
-	fmt.Println(userId)
 	if registerEmail == email || userId == key {
 		return model.EventResp{}, errors.New("already registered to event")
 	}
