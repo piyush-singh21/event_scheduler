@@ -154,12 +154,12 @@ func UpdateCalendarData(updateEvent model.UpdateEvent, attendees []*calendar.Eve
 		Attendees: attendees,
 		Location:  updateEvent.Location,
 	}
-	svr.Events.Update("primary", eventId, e).Do()
+	svr.Events.Update("primary", eventId, e).SendUpdates("all").Do()
 
 }
 func DeleteCalenderEvent(id int, svr *calendar.Service) {
 	eventId := convertToString(id)
-	svr.Events.Delete("primary", eventId).Do()
+	svr.Events.Delete("primary", eventId).SendUpdates("all").Do()
 }
 func convertToString(key int) string {
 	return strconv.Itoa(key) + "event"

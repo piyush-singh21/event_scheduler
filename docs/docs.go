@@ -58,7 +58,8 @@ const docTemplate = `{
                             "type": "string"
                         }
                     }
-                },               "security": [
+                },
+                 "security": [
                     {
                         "Bearer": []
                     }
@@ -97,7 +98,7 @@ const docTemplate = `{
                         }
                     }
                 },
-                "security": [
+                 "security": [
                     {
                         "Bearer": []
                     }
@@ -125,7 +126,7 @@ const docTemplate = `{
                         }
                     }
                 },
-               "security": [
+                 "security": [
                     {
                         "Bearer": []
                     }
@@ -200,6 +201,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/registerEvent": {
+            "post": {
+                "description": "Register for any event",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "example"
+                ],
+                "summary": "Register event",
+                "parameters": [
+                    {
+                        "description": "Register Event",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RegisterEvent"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                 "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
         "/updateEvent": {
             "put": {
                 "description": "Update event mapped to user after logging in",
@@ -232,7 +272,7 @@ const docTemplate = `{
                         }
                     }
                 },
-                "security": [
+                 "security": [
                     {
                         "Bearer": []
                     }
@@ -255,10 +295,16 @@ const docTemplate = `{
         "model.EventAdd": {
             "type": "object",
             "properties": {
-                "Date": {
+                "description": {
                     "type": "string"
                 },
-                "description": {
+                "endDate": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "startDate": {
                     "type": "string"
                 },
                 "title": {
@@ -277,19 +323,34 @@ const docTemplate = `{
                 }
             }
         },
+        "model.RegisterEvent": {
+            "type": "object",
+            "properties": {
+                "eventId": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.UpdateEvent": {
             "type": "object",
             "properties": {
-                "Date": {
+                "description": {
                     "type": "string"
                 },
-                "description": {
+                "endDate": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
+                "location": {
+                    "type": "string"
+                },
+                "startDate": {
+                    "type": "string"
+                },
                 "title": {
+                    "description": "UserId      int    ` + "`" + `json:\"userId\"` + "`" + `",
                     "type": "string"
                 }
             }

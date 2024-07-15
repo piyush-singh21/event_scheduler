@@ -17,6 +17,15 @@ import (
 	"google.golang.org/api/option"
 )
 
+// @Summary Register event
+// @Schemes
+// @Description Register for any event
+// @Tags example
+// @Accept json
+// @Produce json
+// @Param order body model.RegisterEvent true "Register Event"
+// @Success 200 {string} Event Updated Successfully
+// @Router /registerEvent [post]
 func RegisterEvent(c *gin.Context) {
 	var registerEvent model.RegisterEvent
 	if err := c.ShouldBindJSON(&registerEvent); err != nil {
