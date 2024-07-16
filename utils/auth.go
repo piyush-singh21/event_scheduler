@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"golang.org/x/crypto/bcrypt"
 )
 
 var jwtKey = []byte("secret_key")
@@ -50,9 +49,10 @@ func ValidateToken(tokenString string) (*Claims, error) {
 	}
 	return claims, nil
 }
-func verifyUser(enteredPass, hashedPass string) error {
-	return bcrypt.CompareHashAndPassword([]byte(hashedPass), []byte(enteredPass))
-}
+
+//	func verifyUser(enteredPass, hashedPass string) error {
+//		return bcrypt.CompareHashAndPassword([]byte(hashedPass), []byte(enteredPass))
+//	}
 func AuthenticateUser(email, password string) (string, error) {
 	var user model.User
 	err := database.DB.QueryRow("SELECT id,password FROM users WHERE email=?", email).Scan(&user.ID, &user.Password)
@@ -60,8 +60,8 @@ func AuthenticateUser(email, password string) (string, error) {
 	if err != nil {
 		return "", errors.New("email not found,please register")
 	}
-	if err = verifyUser(password, user.Password); err != nil {
-		return "", err
+	if password != user.Password {
+		return "", errors.New("unable to login")
 	}
 	token, err := GenerateToken(user)
 	if err != nil {
